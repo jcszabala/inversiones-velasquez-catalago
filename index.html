@@ -62,9 +62,20 @@
                 <p class="product-detail">Colección de 6 tonos</p>
                 <p class="product-price">US$ 12.90</p>
 
-                <a class="whatsapp-button" data-producto="Colección Chocolate Maxglow">
+<button 
+    class="add-to-cart"
+    data-name="Colección Chocolate Maxglow"
+    data-price="12.90">
+    Agregar al carrito
+</button>
+
+<a class="whatsapp-button"
+   data-producto="Colección Chocolate Maxglow"
+   data-precio="12.90"
+   data-imagen="images/unas.jpg">
     Consultar por WhatsApp
 </a>
+
             </div>
         </article>
 
@@ -76,6 +87,12 @@
         <h3>Colección Passion</h3>
         <p class="product-detail">Colección de 6 tonos</p>
         <p class="product-price">US$ 12.98</p>
+        <button 
+    class="add-to-cart"
+    data-name="Colección Passion Maxglow"
+    data-price="12.98">
+    Agregar al carrito
+</button>
 
         <a class="whatsapp-button" data-producto="Colección Passion Maxglow">
             Consultar por WhatsApp
@@ -91,6 +108,12 @@
         <h3>Base Gel</h3>
         <p class="product-detail">15 ml</p>
         <p class="product-price">US$ 4.98</p>
+        <button 
+    class="add-to-cart"
+    data-name="Base Gel Maxglow 15 ml"
+    data-price="4.98">
+    Agregar al carrito
+</button>
 
         <a class="whatsapp-button" data-producto="Base Gel Maxglow 15 ml">
             Consultar por WhatsApp
@@ -106,6 +129,12 @@
         <h3>Top Coat Glass Super Shine</h3>
         <p class="product-detail">15 ml</p>
         <p class="product-price">US$ 5.68</p>
+        <button 
+    class="add-to-cart"
+    data-name="Top Coat Glass Super Shine Maxglow 15 ml"
+    data-price="5.68">
+    Agregar al carrito
+</button>
 
         <a class="whatsapp-button" data-producto="Top Coat Glass Super Shine Maxglow 15 ml">
             Consultar por WhatsApp
@@ -121,6 +150,12 @@
         <h3>Finish Gel Premium Top Coat</h3>
         <p class="product-detail">10 ml</p>
         <p class="product-price">US$ 3.20</p>
+        <button 
+    class="add-to-cart"
+    data-name="Finish Gel Premium Top Coat Maxglow 10 ml"
+    data-price="3.20">
+    Agregar al carrito
+</button>
 
         <a class="whatsapp-button" data-producto="Finish Gel Premium Top Coat Maxglow 10 ml">
             Consultar por WhatsApp
@@ -199,6 +234,29 @@
 
 </section>
 </main>
+
+<button id="cart-button" class="cart-button">
+    🛒 Carrito (<span id="cart-count">0</span>)
+</button>
+
+<div id="cart-panel" class="cart-panel">
+    <div class="cart-header">
+        <h2>Tu pedido</h2>
+        <button id="close-cart" class="close-cart">×</button>
+    </div>
+
+    <div id="cart-items">
+        <p class="empty-cart">Tu carrito está vacío</p>
+    </div>
+
+    <div class="cart-footer">
+        <p>Total referencial: <strong id="cart-total">US$ 0.00</strong></p>
+
+        <button id="send-cart-whatsapp" class="cart-whatsapp-button">
+            Enviar pedido por WhatsApp
+        </button>
+    </div>
+</div>
 
 <script src="script.js"></script>
 </body>

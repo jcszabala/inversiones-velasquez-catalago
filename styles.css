@@ -229,4 +229,124 @@ button:hover {
 .whatsapp-button:hover {
     transform: translateY(-2px);
     opacity: 0.9;
+}/* =========================
+   CARRITO
+========================= */
+
+.cart-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+
+    background: #d4af37;
+    color: #111;
+    border: none;
+    border-radius: 30px;
+
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+}
+
+.cart-button:hover {
+    transform: scale(1.05);
+}
+
+.cart-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+
+    width: 380px;
+    max-width: 90%;
+    height: 100vh;
+
+    background: #111;
+    color: white;
+
+    z-index: 2000;
+
+    padding: 20px;
+
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+
+    transition: right 0.3s ease;
+
+    overflow-y: auto;
+}
+
+.cart-panel.active {
+    right: 0;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #d4af37;
+    padding-bottom: 15px;
+}
+
+.cart-header h2 {
+    color: #d4af37;
+    margin: 0;
+}
+
+.close-cart {
+    background: transparent;
+    border: none;
+    color: white;
+
+    font-size: 32px;
+    cursor: pointer;
+}
+
+#cart-items {
+    margin-top: 20px;
+}
+
+.empty-cart {
+    color: #aaa;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.cart-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+
+    border-top: 1px solid #333;
+}
+
+.cart-footer p {
+    font-size: 18px;
+}
+
+.cart-whatsapp-button {
+    width: 100%;
+
+    background: #25d366;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 14px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.cart-whatsapp-button:hover {
+    opacity: 0.9;
+}.add-to-cart {
+    margin-bottom: 14px;
 }
