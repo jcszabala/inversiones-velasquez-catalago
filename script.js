@@ -380,7 +380,7 @@ if (productoCompartido) {
                         behavior: "smooth",
                         block: "center"
                     });
-                }, 200);
+                }, 800);
             }
         }
     });
