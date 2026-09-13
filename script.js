@@ -369,6 +369,11 @@ if (productoCompartido) {
             nombre.textContent.trim().toLowerCase() ===
             productoCompartido.trim().toLowerCase()
         ) {
+            tarjetas.forEach(function (otraTarjeta) {
+    otraTarjeta.style.display = "none";
+});
+
+tarjeta.style.display = "block";
 
             const seccion = tarjeta.closest(".products-section");
 
