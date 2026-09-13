@@ -337,10 +337,10 @@ document.querySelectorAll(".product-card").forEach(function (card) {
         ).href;
 
         const mensaje =
-            `Hola 👋 Quisiera consultar por este producto:\n\n` +
+            `Hola, quisiera consultar por este producto:\n\n` +
             `*${nombreProducto}*\n` +
             `Precio: *${precioProducto}*\n\n` +
-            `📷 Ver producto:\n${urlImagen}`;
+            `Ver producto:\n${urlImagen}`;
 
         const numeroWhatsApp = "584243256912";
 
