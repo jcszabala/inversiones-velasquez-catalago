@@ -355,3 +355,11 @@ button:hover {
 .add-to-cart:disabled { opacity: .6; cursor: default; }
 
 .admin-link { display: inline-block; color: #aaa; padding: 24px; font-size: 14px; }
+
+.store-selector {max-width:520px;margin:20px auto;color:#d4af37;}
+.store-selector label {display:block;margin-bottom:10px;font-weight:bold;}
+.store-selector select {box-sizing:border-box;width:100%;padding:13px 10px;background:#1a1a1a;color:white;border:1px solid #d4af37;border-radius:10px;font:inherit;}
+#estado-tienda {color:#ccc;font-size:14px;line-height:1.5;}
+.whatsapp-button[aria-disabled="true"] {background:#444;color:#ddd;cursor:default;display:inline-block;box-sizing:border-box;}
+.cart-whatsapp-button:disabled {background:#444;color:#ddd;cursor:default;}
+#tienda-pedido {color:#d4af37;font-size:15px;}

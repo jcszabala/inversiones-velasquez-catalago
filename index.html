@@ -11,6 +11,14 @@
         <img src="images/logo-inversiones-velasquez.png" alt="Inversiones Velasquez Beauty Pro" class="logo">
 
         <p class="subtitle">Catálogo de productos</p>
+        <div class="store-selector">
+            <label for="tienda">Tu tienda</label>
+            <select id="tienda">
+                <option value="inversiones">Inversiones Velasquez Beauty Pro</option>
+                <option value="mariales">Mariales Velasquez Beauty Shop</option>
+            </select>
+            <p id="estado-tienda" role="status"></p>
+        </div>
 
         <div class="search-box">
             <input type="text" placeholder="Buscar productos...">
@@ -144,6 +152,7 @@
     </div>
 
     <div class="cart-footer">
+        <p id="tienda-pedido"></p>
         <p>Total referencial: <strong id="cart-total">US$ 0.00</strong></p>
 
         <button id="send-cart-whatsapp" class="cart-whatsapp-button">
@@ -154,6 +163,7 @@
 
 <script src="supabase-config.js"></script>
 
+<script src="tiendas.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
