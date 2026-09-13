@@ -335,12 +335,13 @@ document.querySelectorAll(".product-card").forEach(function (card) {
             imagen.getAttribute("src"),
             window.location.href
         ).href;
-
+const urlProducto =
+    `${window.location.origin}${window.location.pathname}?producto=${encodeURIComponent(nombreProducto)}`;
         const mensaje =
-            `Hola, quisiera consultar por este producto:\n\n` +
-            `*${nombreProducto}*\n` +
-            `Precio: *${precioProducto}*\n\n` +
-            `Ver producto:\n${urlImagen}`;
+  `Hola, quisiera consultar por este producto:\n\n` +
+  `*${nombreProducto}*\n` +
+  `Precio: *${precioProducto}*\n\n` +
+  `Ver producto:\n${urlProducto}`;
 
         const numeroWhatsApp = "584243256912";
 
@@ -350,3 +351,37 @@ document.querySelectorAll(".product-card").forEach(function (card) {
         window.location.href = urlWhatsApp;
     });
 });
+
+// Abrir directamente un producto desde un enlace compartido
+const parametrosURL = new URLSearchParams(window.location.search);
+const productoCompartido = parametrosURL.get("producto");
+
+if (productoCompartido) {
+
+    const tarjetas = document.querySelectorAll(".product-card");
+
+    tarjetas.forEach(function (tarjeta) {
+
+        const nombre = tarjeta.querySelector("h3");
+
+        if (
+            nombre &&
+            nombre.textContent.trim().toLowerCase() ===
+            productoCompartido.trim().toLowerCase()
+        ) {
+
+            const seccion = tarjeta.closest(".products-section");
+
+            if (seccion) {
+                abrirCategoria(seccion.id);
+
+                setTimeout(function () {
+                    tarjeta.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                }, 200);
+            }
+        }
+    });
+}
