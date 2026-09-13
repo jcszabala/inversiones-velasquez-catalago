@@ -1,3 +1,55 @@
+// Generar automáticamente los productos desde productos.js
+const gridUnas = document.querySelector("#productos-unas .products-grid");
+
+if (gridUnas && typeof productos !== "undefined") {
+
+    const productosUnas = productos.filter(function (producto) {
+        return producto.categoria === "unas";
+    });
+
+    productosUnas.forEach(function (producto) {
+
+        gridUnas.insertAdjacentHTML("beforeend", `
+            <article class="product-card">
+
+                <img
+                    src="${producto.imagen}"
+                    alt="${producto.nombre} ${producto.marca}"
+                >
+
+                <div class="product-info">
+
+                    <p class="product-brand">${producto.marca}</p>
+
+                    <h3>${producto.nombre}</h3>
+
+                    <p class="product-detail">${producto.detalle}</p>
+
+                    <p class="product-price">
+                        US$ ${producto.precio.toFixed(2)}
+                    </p>
+
+                    <button
+                        class="add-to-cart"
+                        data-name="${producto.nombre} ${producto.marca}"
+                        data-price="${producto.precio}">
+                        Agregar al carrito
+                    </button>
+
+                    <a
+                        class="whatsapp-button"
+                        href="#"
+                        data-producto="${producto.nombre} ${producto.marca}">
+                        Consultar por WhatsApp
+                    </a>
+
+                </div>
+
+            </article>
+        `);
+    });
+}
+
 const categorias = document.querySelector(".categories-section");
 const seccionesProductos = document.querySelectorAll(".products-section");
 
