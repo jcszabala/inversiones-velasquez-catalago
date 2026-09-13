@@ -20,24 +20,25 @@
 <main>
     <section class="categories-section">
     <h2>Categorías</h2>
+    <p id="estado-catalogo" role="status">Cargando productos…</p>
 
     <div class="category-grid">
-        <button class="category-card category-card-image unas-card" id="btn-unas">
+        <button class="category-card category-card-image unas-card" disabled id="btn-unas">
     <span>Uñas</span>
 </button>
-        <button class="category-card category-card-image pestanas-card" id="btn-pestanas">
+        <button class="category-card category-card-image pestanas-card" disabled id="btn-pestanas">
     <span>Cejas y Pestañas</span>
 </button>
-        <button class="category-card category-card-image maquinaria-card" id="btn-maquinaria">
+        <button class="category-card category-card-image maquinaria-card" disabled id="btn-maquinaria">
     <span>Maquinaria</span>
 </button>
-        <button class="category-card category-card-image peluqueria-card" id="btn-peluqueria">
+        <button class="category-card category-card-image peluqueria-card" disabled id="btn-peluqueria">
     <span>Peluquería</span>
 </button>
-        <button class="category-card category-card-image barberia-card" id="btn-barberia">
+        <button class="category-card category-card-image barberia-card" disabled id="btn-barberia">
     <span>Barberia</span>
 </button>
-        <button class="category-card category-card-image maquillaje-card" id="btn-maquillaje">
+        <button class="category-card category-card-image maquillaje-card" disabled id="btn-maquillaje">
     <span>Maquillaje</span>
 </button>
 
@@ -126,6 +127,7 @@
 
 </section>
 </main>
+<footer><a class="admin-link" href="admin.html">Administrar catálogo</a></footer>
 
 <button id="cart-button" class="cart-button">
     🛒 Carrito (<span id="cart-count">0</span>)
@@ -150,7 +152,8 @@
     </div>
 </div>
 
-<script src="productos.js"></script>
+<script src="supabase-config.js"></script>
+
 <script src="script.js"></script>
 </body>
 </html>

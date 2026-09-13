@@ -1,54 +1,68 @@
-// Generar automáticamente los productos desde productos.js
-const gridUnas = document.querySelector("#productos-unas .products-grid");
+// El catálogo público lee los productos y su disponibilidad desde Supabase.
+const numeroWhatsApp = "584243256912";
 
-if (gridUnas && typeof productos !== "undefined") {
-
-    const productosUnas = productos.filter(function (producto) {
-        return producto.categoria === "unas";
-    });
-
-    productosUnas.forEach(function (producto) {
-
-        gridUnas.insertAdjacentHTML("beforeend", `
-            <article class="product-card">
-
-                <img
-                    src="${producto.imagen}"
-                    alt="${producto.nombre} ${producto.marca}"
-                >
-
-                <div class="product-info">
-
-                    <p class="product-brand">${producto.marca}</p>
-
-                    <h3>${producto.nombre}</h3>
-
-                    <p class="product-detail">${producto.detalle}</p>
-
-                    <p class="product-price">
-                        US$ ${producto.precio.toFixed(2)}
-                    </p>
-
-                    <button
-                        class="add-to-cart"
-                        data-name="${producto.nombre} ${producto.marca}"
-                        data-price="${producto.precio}">
-                        Agregar al carrito
-                    </button>
-
-                    <a
-                        class="whatsapp-button"
-                        href="#"
-                        data-producto="${producto.nombre} ${producto.marca}">
-                        Consultar por WhatsApp
-                    </a>
-
-                </div>
-
-            </article>
-        `);
+function escaparHTML(valor) {
+    return String(valor ?? "").replace(/[&<>"']/g, function (caracter) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[caracter];
     });
 }
+
+function enlaceWhatsApp(mensaje) {
+    return `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+}
+
+async function iniciarCatalogo() {
+let catalogo;
+const estadoCarga = document.getElementById("estado-catalogo");
+try {
+    const respuesta = await fetch(`${CATALOGO_CONFIG.url}/rest/v1/productos?select=*&activo=eq.true&order=created_at.asc`, {headers: {apikey: CATALOGO_CONFIG.key}, signal: AbortSignal.timeout(8000)});
+    if (!respuesta.ok) throw new Error("Catálogo remoto no disponible");
+    catalogo = await respuesta.json();
+} catch (error) {
+    estadoCarga.textContent = "No pudimos cargar los productos. Revisa tu conexión y recarga la página.";
+    return;
+}
+
+estadoCarga.hidden = true;
+document.querySelectorAll(".category-card").forEach(boton => boton.disabled = false);
+document.querySelectorAll(".products-section").forEach(function (seccion) {
+    const categoria = seccion.id.replace("productos-", "");
+    const grid = seccion.querySelector(".products-grid");
+    const lista = catalogo.filter(function (producto) {
+        return producto.categoria === categoria;
+    });
+
+    grid.innerHTML = lista.map(function (producto) {
+        const nombreCompleto = `${producto.nombre} ${producto.marca}`;
+        const precio = `US$ ${producto.precio.toFixed(2)}`;
+        const urlProducto = new URL(window.location.href);
+        urlProducto.search = "";
+        urlProducto.hash = "";
+        urlProducto.searchParams.set("producto", producto.nombre);
+        urlProducto.searchParams.set("id", producto.id);
+        const mensaje = `Hola, quisiera consultar por este producto:\n\n*${producto.nombre}*\nPrecio: *${precio}*\n\nVer producto:\n${urlProducto.href}`;
+
+        return `
+            <article class="product-card" data-id="${escaparHTML(producto.id)}">
+                <img src="${escaparHTML(producto.imagen)}" alt="${escaparHTML(nombreCompleto)}">
+                <div class="product-info">
+                    <p class="product-brand">${escaparHTML(producto.marca)}</p>
+                    <h3>${escaparHTML(producto.nombre)}</h3>
+                    <p class="product-detail">${escaparHTML(producto.detalle)}</p>
+                    <p class="product-price">${precio}</p>
+                    <button class="add-to-cart" data-id="${escaparHTML(producto.id)}" data-name="${escaparHTML(nombreCompleto)}" data-price="${producto.precio}" ${producto.disponible === false ? "disabled" : ""}>${producto.disponible === false ? "Agotado" : "Agregar al carrito"}</button>
+                    <a class="whatsapp-button" href="${escaparHTML(enlaceWhatsApp(mensaje))}">Consultar por WhatsApp</a>
+                </div>
+            </article>`;
+    }).join("");
+
+    if (lista.length === 0) {
+        const aviso = document.createElement("p");
+        aviso.className = "empty-category";
+        aviso.textContent = "Aún no hay productos en esta categoría.";
+        grid.after(aviso);
+    }
+});
 
 const categorias = document.querySelector(".categories-section");
 const seccionesProductos = document.querySelectorAll(".products-section");
@@ -61,10 +75,13 @@ function ocultarTodasLasSecciones() {
 
 function mostrarCategorias() {
     ocultarTodasLasSecciones();
+    restablecerProductos();
     categorias.style.display = "block";
 }
 
 function abrirCategoria(idSeccion) {
+    if (!document.getElementById(idSeccion)) return;
+    restablecerProductos();
     categorias.style.display = "none";
     ocultarTodasLasSecciones();
 
@@ -77,28 +94,10 @@ function abrirCategoria(idSeccion) {
 
 ocultarTodasLasSecciones();
 
-document.getElementById("btn-unas").addEventListener("click", function () {
-    abrirCategoria("productos-unas");
-});
-
-document.getElementById("btn-pestanas").addEventListener("click", function () {
-    abrirCategoria("productos-pestanas");
-});
-
-document.getElementById("btn-maquinaria").addEventListener("click", function () {
-    abrirCategoria("productos-maquinaria");
-});
-
-document.getElementById("btn-peluqueria").addEventListener("click", function () {
-    abrirCategoria("productos-peluqueria");
-});
-
-document.getElementById("btn-barberia").addEventListener("click", function () {
-    abrirCategoria("productos-barberia");
-});
-
-document.getElementById("btn-maquillaje").addEventListener("click", function () {
-    abrirCategoria("productos-maquillaje");
+document.querySelectorAll(".category-card").forEach(function (boton) {
+    boton.addEventListener("click", function () {
+        abrirCategoria(boton.id.replace("btn-", "productos-"));
+    });
 });
 
 document.querySelectorAll(".volver-categorias").forEach(function (boton) {
@@ -122,19 +121,14 @@ buscador.addEventListener("input", function () {
     });
 });
 
-const numeroWhatsApp = "584243256912";
+function restablecerProductos() {
+    buscador.value = "";
+    document.querySelectorAll(".product-card").forEach(function (tarjeta) {
+        tarjeta.style.display = "";
+    });
+}
 
-document.querySelectorAll(".whatsapp-button").forEach(function (boton) {
-    const producto = boton.dataset.producto;
-
-    if (producto) {
-        const mensaje = `Hola 👋 Estoy interesado(a) en ${producto}`;
-        const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-
-        boton.href = url;
-        boton.target = "_blank";
-    }
-});const cartButton = document.getElementById("cart-button");
+const cartButton = document.getElementById("cart-button");
 const cartPanel = document.getElementById("cart-panel");
 const closeCart = document.getElementById("close-cart");
 
@@ -144,7 +138,9 @@ cartButton.addEventListener("click", function () {
 
 closeCart.addEventListener("click", function () {
     cartPanel.classList.remove("active");
-});let carrito = [];
+});
+
+let carrito = [];
 
 const cartCount = document.getElementById("cart-count");
 const cartItems = document.getElementById("cart-items");
@@ -153,16 +149,18 @@ const cartTotal = document.getElementById("cart-total");
 document.querySelectorAll(".add-to-cart").forEach(function (boton) {
     boton.addEventListener("click", function () {
         const nombre = boton.dataset.name;
+        const id = boton.dataset.id;
         const precio = parseFloat(boton.dataset.price);
 
         const productoExistente = carrito.find(function (producto) {
-            return producto.nombre === nombre;
+            return producto.id === id;
         });
 
         if (productoExistente) {
             productoExistente.cantidad += 1;
         } else {
             carrito.push({
+                id: id,
                 nombre: nombre,
                 precio: precio,
                 cantidad: 1
@@ -190,20 +188,20 @@ function actualizarCarrito() {
 
     let total = 0;
 
-    carrito.forEach(function (producto) {
+    carrito.forEach(function (producto, indice) {
         const subtotal = producto.precio * producto.cantidad;
         total += subtotal;
 
         cartItems.innerHTML += `
             <div class="cart-item">
-                <strong>${producto.nombre}</strong>
+                <strong>${escaparHTML(producto.nombre)}</strong>
                 <p>US$ ${producto.precio.toFixed(2)}</p>
 
                 <div class="cart-controls">
-                    <button onclick="cambiarCantidad('${producto.nombre}', -1)">−</button>
+                    <button data-indice="${indice}" data-cambio="-1">−</button>
                     <span>${producto.cantidad}</span>
-                    <button onclick="cambiarCantidad('${producto.nombre}', 1)">+</button>
-                    <button onclick="eliminarProducto('${producto.nombre}')">🗑️</button>
+                    <button data-indice="${indice}" data-cambio="1">+</button>
+                    <button data-indice="${indice}" data-eliminar="true">🗑️</button>
                 </div>
 
                 <p>Subtotal: US$ ${subtotal.toFixed(2)}</p>
@@ -213,9 +211,18 @@ function actualizarCarrito() {
 
     cartTotal.textContent = `US$ ${total.toFixed(2)}`;
 }
-function cambiarCantidad(nombre, cambio) {
+cartItems.addEventListener("click", function (event) {
+    const boton = event.target.closest("button[data-indice]");
+    if (!boton) return;
+    const producto = carrito[Number(boton.dataset.indice)];
+    if (!producto) return;
+    if (boton.dataset.eliminar) eliminarProducto(producto.id);
+    else cambiarCantidad(producto.id, Number(boton.dataset.cambio));
+});
+
+function cambiarCantidad(id, cambio) {
     const producto = carrito.find(function (item) {
-        return item.nombre === nombre;
+        return item.id === id;
     });
 
     if (!producto) return;
@@ -224,16 +231,16 @@ function cambiarCantidad(nombre, cambio) {
 
     if (producto.cantidad <= 0) {
         carrito = carrito.filter(function (item) {
-            return item.nombre !== nombre;
+            return item.id !== id;
         });
     }
 
     actualizarCarrito();
 }
 
-function eliminarProducto(nombre) {
+function eliminarProducto(id) {
     carrito = carrito.filter(function (item) {
-        return item.nombre !== nombre;
+        return item.id !== id;
     });
 
     actualizarCarrito();
@@ -245,148 +252,42 @@ document.getElementById("send-cart-whatsapp").addEventListener("click", function
         return;
     }
 
-    let mensaje = "Hola, quiero realizar el siguiente pedido:%0A%0A";
+    let mensaje = "Hola, quiero realizar el siguiente pedido:\n\n";
     let total = 0;
 
     carrito.forEach(function (producto) {
         const subtotal = producto.precio * producto.cantidad;
         total += subtotal;
 
-        mensaje += `• ${producto.cantidad} x ${producto.nombre} — US$ ${subtotal.toFixed(2)}%0A`;
+        mensaje += `• ${producto.cantidad} x ${producto.nombre} — US$ ${subtotal.toFixed(2)}\n`;
     });
 
-    mensaje += `%0A*Total referencial: US$ ${total.toFixed(2)}*`;
-    mensaje += "%0A%0AQuedo atento(a) a disponibilidad y confirmación. Gracias.";
+    mensaje += `\n*Total referencial: US$ ${total.toFixed(2)}*`;
+    mensaje += "\n\nQuedo atento(a) a disponibilidad y confirmación. Gracias.";
 
-    const numeroWhatsApp = "584243256912";
-
-    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
-
-window.location.href = urlWhatsApp;
+    window.location.href = enlaceWhatsApp(mensaje);
 });
 
-// Crear automáticamente el botón "Agregar al carrito"
-// para todos los productos del catálogo
-document.querySelectorAll(".product-card").forEach(function (card) {
-
-    // Si ya tiene botón de carrito, no hacemos nada
-    if (card.querySelector(".add-to-cart")) return;
-
-    const nombre = card.querySelector("h3");
-    const precio = card.querySelector(".product-price");
-    const productInfo = card.querySelector(".product-info");
-
-    if (!nombre || !precio || !productInfo) return;
-
-    const precioNumero = precio.textContent
-        .replace("US$", "")
-        .trim();
-
-    const boton = document.createElement("button");
-
-    boton.className = "add-to-cart";
-    boton.dataset.name = nombre.textContent.trim();
-    boton.dataset.price = precioNumero;
-    boton.textContent = "Agregar al carrito";
-
-    const whatsappButton = productInfo.querySelector(".whatsapp-button");
-
-    if (whatsappButton) {
-        productInfo.insertBefore(boton, whatsappButton);
-    } else {
-        productInfo.appendChild(boton);
+// Los enlaces existentes por nombre siguen abriendo un solo producto.
+const productoCompartido = new URLSearchParams(window.location.search).get("producto");
+const idCompartido = new URLSearchParams(window.location.search).get("id");
+if (productoCompartido || idCompartido) {
+    const tarjetas = Array.from(document.querySelectorAll(".product-card"));
+    const tarjeta = tarjetas.find(function (item) {
+        if (idCompartido) return item.dataset.id === idCompartido;
+        return item.querySelector("h3").textContent.trim().toLowerCase() ===
+            productoCompartido.trim().toLowerCase();
+    });
+    if (tarjeta) {
+        abrirCategoria(tarjeta.closest(".products-section").id);
+        tarjetas.forEach(function (item) {
+            item.style.display = item === tarjeta ? "" : "none";
+        });
+        setTimeout(function () {
+            tarjeta.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 800);
     }
-});
-
-// Crear automáticamente el botón "Consultar por WhatsApp"
-document.querySelectorAll(".product-card").forEach(function (card) {
-
-    // Si ya existe, no lo duplicamos
-    if (card.querySelector(".whatsapp-button")) return;
-
-    const productInfo = card.querySelector(".product-info");
-
-    if (!productInfo) return;
-
-    const whatsappButton = document.createElement("a");
-
-    whatsappButton.className = "whatsapp-button";
-    whatsappButton.textContent = "Consultar por WhatsApp";
-    whatsappButton.href = "#";
-
-    productInfo.appendChild(whatsappButton);
-});
-// Configurar automáticamente los botones de consulta por WhatsApp
-document.querySelectorAll(".product-card").forEach(function (card) {
-    const nombre = card.querySelector("h3");
-    const precio = card.querySelector(".product-price");
-    const imagen = card.querySelector("img");
-    const whatsappButton = card.querySelector(".whatsapp-button");
-
-    if (!nombre || !precio || !imagen || !whatsappButton) return;
-
-    whatsappButton.addEventListener("click", function (event) {
-        event.preventDefault();
-
-        const nombreProducto = nombre.textContent.trim();
-        const precioProducto = precio.textContent.trim();
-
-        const urlImagen = new URL(
-            imagen.getAttribute("src"),
-            window.location.href
-        ).href;
-const urlProducto =
-    `${window.location.origin}${window.location.pathname}?producto=${encodeURIComponent(nombreProducto)}`;
-        const mensaje =
-  `Hola, quisiera consultar por este producto:\n\n` +
-  `*${nombreProducto}*\n` +
-  `Precio: *${precioProducto}*\n\n` +
-  `Ver producto:\n${urlProducto}`;
-
-        const numeroWhatsApp = "584243256912";
-
-        const urlWhatsApp =
-            `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-
-        window.location.href = urlWhatsApp;
-    });
-});
-
-// Abrir directamente un producto desde un enlace compartido
-const parametrosURL = new URLSearchParams(window.location.search);
-const productoCompartido = parametrosURL.get("producto");
-
-if (productoCompartido) {
-
-    const tarjetas = document.querySelectorAll(".product-card");
-
-    tarjetas.forEach(function (tarjeta) {
-
-        const nombre = tarjeta.querySelector("h3");
-
-        if (
-            nombre &&
-            nombre.textContent.trim().toLowerCase() ===
-            productoCompartido.trim().toLowerCase()
-        ) {
-            tarjetas.forEach(function (otraTarjeta) {
-    otraTarjeta.style.display = "none";
-});
-
-tarjeta.style.display = "block";
-
-            const seccion = tarjeta.closest(".products-section");
-
-            if (seccion) {
-                abrirCategoria(seccion.id);
-
-                setTimeout(function () {
-                    tarjeta.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center"
-                    });
-                }, 800);
-            }
-        }
-    });
 }
+
+}
+iniciarCatalogo();

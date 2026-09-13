@@ -350,3 +350,8 @@ button:hover {
 }.add-to-cart {
     margin-bottom: 14px;
 }
+/* Evitar mostrar secciones vacías mientras se consulta el catálogo. */
+.products-section { display: none; }
+.add-to-cart:disabled { opacity: .6; cursor: default; }
+
+.admin-link { display: inline-block; color: #aaa; padding: 24px; font-size: 14px; }

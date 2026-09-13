@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Administrar catálogo · Inversiones Velasquez</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header><a href="index.html">← Ver catálogo</a><h1>Administrar catálogo</h1><p>Inversiones Velasquez</p></header>
+<main>
+<p id="estado" role="status" aria-live="polite">Conectando…</p>
+<form id="login" hidden>
+<h2>Entrar a tu catálogo</h2>
+<label>Correo<input name="email" type="email" autocomplete="username" required></label>
+<label>Contraseña<input name="password" type="password" autocomplete="current-password" required></label>
+<button>Entrar</button>
+</form>
+<section id="panel" hidden>
+<div class="toolbar"><button id="nuevo" type="button">+ Nuevo producto</button><button id="salir" type="button">Cerrar sesión</button></div>
+<form id="editor">
+<h2 id="titulo-editor">Nuevo producto</h2>
+<input name="id" type="hidden">
+<label>Nombre<input name="nombre" maxlength="160" required></label>
+<label>Marca<input name="marca" maxlength="100" required></label>
+<div class="columns"><label>Precio en dólares<input name="precio" type="number" min="0" max="999999.99" step="0.01" inputmode="decimal" required></label>
+<label>Categoría<select name="categoria" required><option value="unas">Uñas</option><option value="pestanas">Cejas y Pestañas</option><option value="maquinaria">Maquinaria</option><option value="peluqueria">Peluquería</option><option value="barberia">Barbería</option><option value="maquillaje">Maquillaje</option></select></label></div>
+<label>Descripción o presentación<textarea name="detalle" maxlength="2000" rows="3"></textarea></label>
+<label>Foto<input id="foto" type="file" accept="image/jpeg,image/png,image/webp"></label>
+<p class="hint">Desde el teléfono puedes tomar una foto o elegir una de tu galería. Usa JPG, PNG o WebP, hasta 10 MB.</p>
+<img id="preview" alt="Vista previa del producto" hidden>
+<label class="check"><input name="disponible" type="checkbox" checked> Disponible para pedidos</label>
+<label class="check"><input name="activo" type="checkbox" checked> Visible en el catálogo</label>
+<button id="guardar">Guardar producto</button><button id="cancelar" type="button">Limpiar formulario</button>
+</form>
+<h2>Mis productos</h2><p id="lista-estado"></p><div id="lista"></div>
+</section>
+</main>
+<script src="supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
+<script src="admin.js"></script>
+</body></html>
