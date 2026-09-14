@@ -28,6 +28,12 @@
 <label>Foto<input id="foto" type="file" accept="image/jpeg,image/png,image/webp"></label>
 <p class="hint">Desde el teléfono puedes tomar una foto o elegir una de tu galería. Usa JPG, PNG o WebP, hasta 10 MB.</p>
 <img id="preview" alt="Vista previa del producto" hidden>
+<fieldset class="merchandising"><legend>Visibilidad y promociones</legend>
+<label class="check"><input name="nuevo" type="checkbox"> Nuevo / recién llegado</label>
+<label class="check"><input name="destacado" type="checkbox"> Destacado en el catálogo</label>
+<label class="check"><input name="en_oferta" type="checkbox"> En oferta</label>
+<label id="oferta-field" hidden>Precio de oferta en dólares<input name="precio_oferta" type="number" min="0" max="999999.99" step="0.01" inputmode="decimal"><small>Debe ser menor que el precio habitual. El catálogo mostrará ambos.</small></label>
+</fieldset>
 <label class="check"><input name="disponible" type="checkbox" checked> Disponible para pedidos</label>
 <label class="check"><input name="activo" type="checkbox" checked> Visible en el catálogo</label>
 <button id="guardar">Guardar producto</button><button id="cancelar" type="button">Limpiar formulario</button>

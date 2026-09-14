@@ -5,11 +5,12 @@ const panel = document.getElementById('panel');
 const editor = document.getElementById('editor');
 const foto = document.getElementById('foto');
 const preview = document.getElementById('preview');
+const modoVistaPrevia = ['localhost','127.0.0.1'].includes(location.hostname);
 let cliente, registros = [], imagenActual = '', vistaTemporal = null, ocupado = false;
 function mensaje(texto, error = false) { estado.textContent = texto; estado.classList.toggle('error', error); }
 function campo(nombre) { return editor.elements.namedItem(nombre); }
 function limpiar() {
-    editor.reset(); campo('id').value = ''; imagenActual = '';
+    editor.reset(); document.getElementById('oferta-field').hidden = true; campo('precio_oferta').required = false; campo('id').value = ''; imagenActual = '';
     if (vistaTemporal) URL.revokeObjectURL(vistaTemporal);
     vistaTemporal = null; preview.hidden = true; preview.removeAttribute('src');
     document.getElementById('titulo-editor').textContent = 'Nuevo producto';
@@ -35,6 +36,7 @@ async function listar() {
             if (ocupado) return;
             limpiar();
             for (const n of ['id','nombre','marca','precio','categoria','detalle']) campo(n).value = p[n];
+            campo('nuevo').checked = p.nuevo === true; campo('destacado').checked = p.destacado === true; campo('en_oferta').checked = p.precio_oferta != null; campo('precio_oferta').value = p.precio_oferta ?? ''; document.getElementById('oferta-field').hidden = p.precio_oferta == null; campo('precio_oferta').required = p.precio_oferta != null;
             campo('activo').checked = p.activo; campo('disponible').checked = p.disponible;
             imagenActual = p.imagen; preview.src = p.imagen; preview.hidden = false;
             document.getElementById('titulo-editor').textContent = 'Editar producto';
@@ -53,8 +55,9 @@ async function sesion() {
         mensaje('Esta cuenta todavía no tiene permiso para administrar el catálogo.', true); return;
     }
     login.hidden = true; panel.hidden = false;
-    await listar(); mensaje('Listo para administrar tus productos.');
+    await listar(); mensaje(modoVistaPrevia ? 'Vista previa: puedes explorar el formulario, pero aquí no se guardan cambios.' : 'Listo para administrar tus productos.');
 }
+campo('en_oferta').addEventListener('change', () => { document.getElementById('oferta-field').hidden = !campo('en_oferta').checked; campo('precio_oferta').required = campo('en_oferta').checked; });
 foto.addEventListener('change', () => {
     if (vistaTemporal) URL.revokeObjectURL(vistaTemporal);
     vistaTemporal = null;
@@ -78,9 +81,11 @@ editor.addEventListener('submit', async e => {
     e.preventDefault(); if (ocupado) return;
     const id = campo('id').value || crypto.randomUUID();
     const existente = Boolean(campo('id').value);
-    const p = {id,nombre:campo('nombre').value.trim(),marca:campo('marca').value.trim(),precio:Number(campo('precio').value),categoria:campo('categoria').value,detalle:campo('detalle').value.trim(),activo:campo('activo').checked,disponible:campo('disponible').checked,imagen:imagenActual};
+    const p = {id,nombre:campo('nombre').value.trim(),marca:campo('marca').value.trim(),precio:Number(campo('precio').value),categoria:campo('categoria').value,detalle:campo('detalle').value.trim(),activo:campo('activo').checked,disponible:campo('disponible').checked,imagen:imagenActual,nuevo:campo('nuevo').checked,destacado:campo('destacado').checked,precio_oferta:campo('en_oferta').checked ? Number(campo('precio_oferta').value) : null};
     if (!p.nombre || !p.marca || !Number.isFinite(p.precio) || p.precio < 0) { mensaje('Revisa nombre, marca y precio.',true); return; }
     if (!foto.files[0] && !p.imagen) { mensaje('Agrega una foto para este producto.',true); return; }
+    if (p.precio_oferta !== null && (campo('precio_oferta').value === '' || !Number.isFinite(p.precio_oferta) || p.precio_oferta < 0 || p.precio_oferta >= p.precio)) { mensaje('El precio de oferta debe ser menor que el precio habitual.',true); return; }
+    if (modoVistaPrevia) { mensaje('Vista previa: formulario validado. No se guardó ningún cambio en el catálogo real.'); return; }
     bloquear(true); mensaje('Guardando producto…');
     let subida = null, guardado = false;
     try {

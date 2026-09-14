@@ -1,182 +1,25 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inversiones Velasquez Beauty Pro</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-    <body>
-    <header class="hero">
-        <img src="images/logo-inversiones-velasquez.png" alt="Inversiones Velasquez Beauty Pro" class="logo">
-
-        <p class="subtitle">Catálogo de productos</p>
-        <div class="store-selector">
-            <label for="tienda">Seleccionar sucursal</label>
-            <select id="tienda">
-                <option value="inversiones">Inversiones Velasquez Beauty Pro</option>
-                <option value="mariales">Mariales Velasquez Beauty Shop</option>
-            </select>
-            <p id="estado-tienda" role="status"></p>
-        </div>
-
-        <div class="search-box">
-            <input type="text" placeholder="Buscar productos...">
-        </div>
-    </header>
-
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10100f"><title>Inversiones Velasquez Beauty Pro</title><link rel="stylesheet" href="styles.css?v=centrado2"></head>
+<body>
+<div class="announcement">Delivery en Valle de la Pascua · Gratis en compras superiores a US$50 <span>Envíos nacionales con cobro en destino</span></div>
+<header class="topbar"><a class="wordmark" href="./" id="brand-home">MARIALES <small>BEAUTY COLLECTION</small></a><div class="header-actions"><label class="branch-label" for="tienda">Seleccionar sucursal<select id="tienda"><option value="inversiones">Inversiones Velasquez Beauty Pro</option><option value="mariales">Mariales Velasquez Beauty Shop</option></select></label><button class="cart-button" id="cart-button" aria-haspopup="dialog">Mi carrito <span id="cart-count">0</span></button></div></header>
 <main>
-    <section class="categories-section">
-    <h2>Categorías</h2>
-    <p id="estado-catalogo" role="status">Cargando productos…</p>
-
-    <div class="category-grid">
-        <button class="category-card category-card-image unas-card" disabled id="btn-unas">
-    <span>Uñas</span>
-</button>
-        <button class="category-card category-card-image pestanas-card" disabled id="btn-pestanas">
-    <span>Cejas y Pestañas</span>
-</button>
-        <button class="category-card category-card-image maquinaria-card" disabled id="btn-maquinaria">
-    <span>Maquinaria</span>
-</button>
-        <button class="category-card category-card-image peluqueria-card" disabled id="btn-peluqueria">
-    <span>Peluquería</span>
-</button>
-        <button class="category-card category-card-image barberia-card" disabled id="btn-barberia">
-    <span>Barberia</span>
-</button>
-        <button class="category-card category-card-image maquillaje-card" disabled id="btn-maquillaje">
-    <span>Maquillaje</span>
-</button>
-
-    </div>
-</section> 
-<section class="products-section" id="productos-unas">
-
-    <button class="back-button volver-categorias">
-        ← Volver a categorías
-    </button>
-
-    <h2>Productos de Uñas</h2>
-
-    <div class="products-grid">
-
-        
-
-    </div>
-    </section>
-<section class="products-section" id="productos-pestanas">
-
-    <button class="back-button volver-categorias">
-    ← Volver a categorías
-</button>
-
-    <h2>Productos de Cejas y Pestañas</h2>
-
-    <div class="products-grid">
-        <!-- Aquí agregaremos los productos -->
-    </div>
-
+<section class="hero"><div class="hero-copy"><p class="eyebrow">TU ESENCIA. TU ESTILO.</p><h1>El detalle que te distingue.</h1><p class="hero-description">Encuentra tus esenciales de belleza.<br>Elige tus favoritos y pide con tu sucursal.</p><a class="primary" href="#coleccion">Explorar catálogo <span aria-hidden="true">↗</span></a><p class="store-status" id="estado-tienda"></p></div><div class="hero-brand"><img class="logo" src="images/logo-inversiones-velasquez.png" alt="Inversiones Velasquez Beauty Pro"><span class="brand-caption">BELLEZA CON IDENTIDAD</span></div></section>
+<section class="categories-section" aria-labelledby="categorias-titulo"><div class="section-heading"><div><p class="eyebrow">ENCUENTRA LO TUYO</p><h2 id="categorias-titulo">Un mundo de belleza</h2></div><span class="subtle">Seis categorías. Tu propio estilo.</span></div><div class="category-grid">
+<button class="category-card" data-category="unas" aria-pressed="false"><img src="images/unas.jpg" alt=""><span><small>COLOR & CUIDADO</small>Uñas<b aria-hidden="true">↗</b></span></button>
+<button class="category-card" data-category="pestanas" aria-pressed="false"><img src="images/pestanas.jpg" alt=""><span><small>DEFINE TU MIRADA</small>Cejas y pestañas<b aria-hidden="true">↗</b></span></button>
+<button class="category-card" data-category="maquinaria" aria-pressed="false"><img src="images/maquinaria.jpg" alt=""><span><small>EQUIPA TU ESPACIO</small>Maquinaria<b aria-hidden="true">↗</b></span></button>
+<button class="category-card" data-category="peluqueria" aria-pressed="false"><img src="images/peluqueria.jpg" alt=""><span><small>CUIDADO CAPILAR</small>Peluquería<b aria-hidden="true">↗</b></span></button>
+<button class="category-card" data-category="barberia" aria-pressed="false"><img src="images/barberia.jpg" alt=""><span><small>PRECISIÓN & ESTILO</small>Barbería<b aria-hidden="true">↗</b></span></button>
+<button class="category-card" data-category="maquillaje" aria-pressed="false"><img src="images/maquillaje.jpg" alt=""><span><small>EXPRESA TU ESTILO</small>Maquillaje<b aria-hidden="true">↗</b></span></button>
+</div></section>
+<section id="coleccion" class="collection" aria-labelledby="collection-title"><div class="section-heading"><div><p class="eyebrow">SELECCIONADOS PARA TI</p><h2 id="collection-title">Nuestra colección</h2></div><button id="clear-filters" class="text-button">Ver todos los productos</button></div>
+<div class="filter-tabs" aria-label="Tipo de producto"><button data-tag="todos" class="active" aria-pressed="true">Todos</button><button data-tag="nuevo" aria-pressed="false">Novedades</button><button data-tag="oferta" aria-pressed="false">Ofertas</button><button data-tag="destacado" aria-pressed="false">Destacados</button></div>
+<div class="filters"><label class="search">Buscar<input id="buscar" type="search" placeholder="Nombre, marca o producto…"></label><label>Marca<select id="marca"><option value="">Todas las marcas</option></select></label><label>Desde US$<input id="precio-min" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label><label>Hasta US$<input id="precio-max" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Sin límite"></label><label>Ordenar<select id="orden"><option value="destacados">Destacados primero</option><option value="menor">Menor precio</option><option value="mayor">Mayor precio</option><option value="nombre">Nombre A–Z</option></select></label></div>
+<p id="estado-catalogo" class="result-count" role="status">Cargando productos…</p><button id="retry" class="secondary" hidden>Volver a intentar</button><div id="product-grid" class="products-grid"></div><div id="empty" class="empty-state" hidden><span aria-hidden="true">✧</span><h3>No hay productos para esta selección</h3><p>Prueba otra categoría o cambia los filtros.</p><button class="secondary" id="empty-clear">Ver todos</button></div>
 </section>
-<section class="products-section" id="productos-maquinaria">
-
-    <button class="back-button volver-categorias">
-        ← Volver a categorías
-    </button>
-
-    <h2>Productos de Maquinaria</h2>
-
-    <div class="products-grid">
-        <!-- Aquí agregaremos los productos -->
-    </div>
-
-</section>
-
-<section class="products-section" id="productos-peluqueria">
-
-    <button class="back-button volver-categorias">
-        ← Volver a categorías
-    </button>
-
-    <h2>Productos de Peluquería</h2>
-
-    <div class="products-grid">
-        <!-- Aquí agregaremos los productos -->
-    </div>
-
-</section>
-
-<section class="products-section" id="productos-barberia">
-
-    <button class="back-button volver-categorias">
-        ← Volver a categorías
-    </button>
-
-    <h2>Productos de Barbería</h2>
-
-    <div class="products-grid">
-        <!-- Aquí agregaremos los productos -->
-    </div>
-
-</section>
-
-<section class="products-section" id="productos-maquillaje">
-
-    <button class="back-button volver-categorias">
-        ← Volver a categorías
-    </button>
-
-    <h2>Productos de Maquillaje</h2>
-
-    <div class="products-grid">
-        <!-- Aquí agregaremos los productos -->
-    </div>
-
-</section>
-</main>
-<footer><a class="admin-link" href="admin.html">Administrar catálogo</a></footer>
-
-<button id="cart-button" class="cart-button">
-    🛒 Carrito (<span id="cart-count">0</span>)
-</button>
-
-<div id="cart-panel" class="cart-panel">
-    <div class="cart-header">
-        <h2>Tu pedido</h2>
-        <button id="close-cart" class="close-cart">×</button>
-    </div>
-
-    <div id="cart-items">
-        <p class="empty-cart">Tu carrito está vacío</p>
-    </div>
-
-    <div class="cart-footer">
-        <p id="tienda-pedido"></p>
-        <div class="delivery-options">
-            <label for="tipo-entrega">¿Cómo quieres recibir tu pedido?</label>
-            <select id="tipo-entrega" required>
-                <option value="">Selecciona una opción</option>
-                <option value="local">Delivery gratis en Valle de la Pascua</option>
-                <option value="nacional">Envío nacional con cobro en destino</option>
-            </select>
-            <p id="detalle-entrega" role="status">Elige la modalidad de entrega para enviar tu pedido.</p>
-            <label for="nombre-entrega">Nombre de quien recibe</label>
-            <input id="nombre-entrega" autocomplete="name" maxlength="120" required>
-            <label for="direccion-entrega">Dirección de entrega o agencia de destino</label>
-            <textarea id="direccion-entrega" autocomplete="street-address" maxlength="500" rows="3" required></textarea>
-        </div>
-        <p>Total referencial: <strong id="cart-total">US$ 0.00</strong></p>
-
-        <button id="send-cart-whatsapp" class="cart-whatsapp-button">
-            Enviar pedido por WhatsApp
-        </button>
-    </div>
-</div>
-
-<script src="supabase-config.js"></script>
-
-<script src="tiendas.js"></script>
-<script src="script.js"></script>
-</body>
-</html>
+<section class="service-strip"><div><span>01</span><h3>Una colección compartida</h3><p>Mismos productos y precios en ambas sucursales.</p></div><div><span>02</span><h3>A tu puerta</h3><p>Delivery con costo adicional en Valle de la Pascua. Gratis al superar US$50 en productos.</p></div><div><span>03</span><h3>Llegamos más lejos</h3><p>Envíos nacionales con cobro de flete en destino.</p></div></section>
+</main><footer><div><strong>INVERSIONES VELASQUEZ · MARIALES VELASQUEZ</strong><p>Dos identidades. La misma pasión por la belleza.</p></div><a href="admin.html">Administrar catálogo</a></footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<dialog id="cart-panel" aria-labelledby="cart-title"><div class="cart-heading"><div><p class="eyebrow">TUS FAVORITOS</p><h2 id="cart-title">Mi carrito</h2></div><button id="close-cart" class="icon-button" aria-label="Cerrar carrito">×</button></div><p id="cart-store" class="subtle"></p><p id="cart-notice" role="status"></p><div id="cart-edit"><div id="cart-items"></div><div class="cart-total-row"><span>Subtotal de productos</span><strong id="cart-total">US$ 0.00</strong></div><p id="delivery-progress" class="delivery-progress"></p><form id="delivery-form"><h3>¿Cómo recibes tu pedido?</h3><label>Modalidad de entrega<select id="tipo-entrega" required><option value="">Seleccionar entrega</option><option value="local">Delivery en Valle de la Pascua</option><option value="nacional">Envío nacional · cobro en destino</option></select></label><p id="detalle-entrega" class="subtle"></p><label>Nombre de quien recibe<input id="nombre-entrega" autocomplete="name" maxlength="120" required></label><label>Dirección o agencia de destino<textarea id="direccion-entrega" autocomplete="street-address" maxlength="500" rows="3" required></textarea></label><p class="subtle">Revisarás el pedido antes de abrir WhatsApp.</p><button class="primary full" id="review-button">Revisar mi pedido →</button></form></div><section id="order-review" hidden><h3>Resumen de tu pedido</h3><div id="summary-content"></div><p class="subtle">El pedido y el pago se confirman con la sucursal por WhatsApp.</p><button id="send-cart-whatsapp" class="primary full">Enviar pedido por WhatsApp</button><button id="back-cart" class="text-button full">Volver y editar</button></section></dialog>
+<script src="supabase-config.js"></script><script src="tiendas.js"></script><script src="script.js"></script></body></html>
