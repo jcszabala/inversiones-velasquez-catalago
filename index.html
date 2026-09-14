@@ -12,7 +12,7 @@
 
         <p class="subtitle">Catálogo de productos</p>
         <div class="store-selector">
-            <label for="tienda">Tu tienda</label>
+            <label for="tienda">Seleccionar sucursal</label>
             <select id="tienda">
                 <option value="inversiones">Inversiones Velasquez Beauty Pro</option>
                 <option value="mariales">Mariales Velasquez Beauty Shop</option>
@@ -153,6 +153,19 @@
 
     <div class="cart-footer">
         <p id="tienda-pedido"></p>
+        <div class="delivery-options">
+            <label for="tipo-entrega">¿Cómo quieres recibir tu pedido?</label>
+            <select id="tipo-entrega" required>
+                <option value="">Selecciona una opción</option>
+                <option value="local">Delivery gratis en Valle de la Pascua</option>
+                <option value="nacional">Envío nacional con cobro en destino</option>
+            </select>
+            <p id="detalle-entrega" role="status">Elige la modalidad de entrega para enviar tu pedido.</p>
+            <label for="nombre-entrega">Nombre de quien recibe</label>
+            <input id="nombre-entrega" autocomplete="name" maxlength="120" required>
+            <label for="direccion-entrega">Dirección de entrega o agencia de destino</label>
+            <textarea id="direccion-entrega" autocomplete="street-address" maxlength="500" rows="3" required></textarea>
+        </div>
         <p>Total referencial: <strong id="cart-total">US$ 0.00</strong></p>
 
         <button id="send-cart-whatsapp" class="cart-whatsapp-button">

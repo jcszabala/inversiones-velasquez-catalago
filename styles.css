@@ -114,8 +114,8 @@ button:hover {
     inset: 0;
     background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.82),
-        rgba(0, 0, 0, 0.18)
+        rgba(0, 0, 0, 0.40),
+        rgba(0, 0, 0, 0.04)
     );
 }
 
@@ -363,3 +363,10 @@ button:hover {
 .whatsapp-button[aria-disabled="true"] {background:#444;color:#ddd;cursor:default;display:inline-block;box-sizing:border-box;}
 .cart-whatsapp-button:disabled {background:#444;color:#ddd;cursor:default;}
 #tienda-pedido {color:#d4af37;font-size:15px;}
+
+.category-card-image span {text-shadow:0 1px 3px #000,0 0 8px #000;}
+.delivery-options {text-align:left;margin:20px 0;}
+.delivery-options label {display:block;font-size:15px;margin:14px 0 7px;}
+.delivery-options input,.delivery-options select,.delivery-options textarea {box-sizing:border-box;width:100%;max-width:100%;padding:11px;border:1px solid #777;border-radius:8px;background:#1a1a1a;color:#fff;font:inherit;}
+.delivery-options select {font-size:14px;}
+#detalle-entrega {font-size:14px;line-height:1.5;color:#ccc;}

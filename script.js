@@ -287,6 +287,17 @@ function eliminarProducto(id) {
     actualizarCarrito();
 }
 
+const tipoEntrega = document.getElementById("tipo-entrega");
+const nombreEntrega = document.getElementById("nombre-entrega");
+const direccionEntrega = document.getElementById("direccion-entrega");
+tipoEntrega.addEventListener("change", function () {
+    document.getElementById("detalle-entrega").textContent = tipoEntrega.value === "local"
+        ? "Delivery sin costo dentro de Valle de la Pascua. Indica sector, dirección y punto de referencia."
+        : tipoEntrega.value === "nacional"
+            ? "El flete se paga al recibir y no está incluido en el total de productos. Indica ciudad, estado y dirección o agencia. Coordinamos la empresa de envío por WhatsApp."
+            : "Elige la modalidad de entrega para enviar tu pedido.";
+});
+
 document.getElementById("send-cart-whatsapp").addEventListener("click", function () {
     if (!TIENDAS[tiendaActual].whatsapp) return;
     if (carrito.length === 0) {
@@ -294,6 +305,10 @@ document.getElementById("send-cart-whatsapp").addEventListener("click", function
         return;
     }
 
+    for (const campo of [tipoEntrega, nombreEntrega, direccionEntrega]) {
+        campo.setCustomValidity(campo.value.trim() ? "" : "Completa este campo para continuar.");
+        if (!campo.reportValidity()) return;
+    }
     let mensaje = `Hola, quiero realizar el siguiente pedido con ${TIENDAS[tiendaActual].nombre}:\n\n`;
     let total = 0;
 
@@ -305,6 +320,10 @@ document.getElementById("send-cart-whatsapp").addEventListener("click", function
     });
 
     mensaje += `\n*Total referencial: US$ ${total.toFixed(2)}*`;
+    mensaje += tipoEntrega.value === "local"
+        ? "\n\nEntrega: Delivery gratis en Valle de la Pascua."
+        : "\n\nEntrega: Envío nacional con cobro en destino. Flete no incluido en el total.";
+    mensaje += `\nRecibe: ${nombreEntrega.value.trim()}\nDirección o agencia: ${direccionEntrega.value.trim()}`;
     mensaje += "\n\nQuedo atento(a) a disponibilidad y confirmación. Gracias.";
 
     window.location.href = enlaceWhatsApp(mensaje);
