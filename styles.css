@@ -19,3 +19,5 @@
 .hero h1 br:after{content:' '}
 .hero-description{margin-bottom:20px}
 @media(max-width:540px){.hero{padding:28px 0 36px;gap:22px}.hero-brand{width:100%}.logo{max-height:185px}.brand-caption{font-size:8px}.hero h1{font-size:38px}.hero .eyebrow{font-size:8px}.hero-description{font-size:12px}.hero .primary{font-size:11px;padding:12px 18px}.store-status{font-size:9px}}
+
+.cart-checkout{position:sticky;bottom:-28px;margin:20px -28px -28px;padding:16px 28px 22px;background:#161712;border-top:1px solid #75603a;box-shadow:0 -8px 20px #0003;z-index:2}.cart-checkout p{margin:0 0 10px}.cart-checkout small{display:block;text-align:center;font-size:10px;color:var(--muted);margin-top:9px}@media(max-width:540px){.cart-checkout{bottom:-20px;margin:20px -16px -20px;padding:14px 16px 20px}}
